@@ -1,0 +1,64 @@
+<!-- base_layout.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/baseLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Yläpalkki -->
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+
+        <!-- Perustiedot -->
+        <Button
+            android:id="@+id/buttonBasicInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:width="150dp"
+            android:text="Perustiedot"
+            android:textColor="@color/secondary"/>
+
+        <!-- Autot -->
+        <Button
+            android:id="@+id/buttonVehicles"
+            android:layout_width="112dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:width="100dp"
+            android:text="Autot"
+            android:textColor="@color/secondary"
+            android:visibility="visible" />
+
+        <!-- Kelikamera -->
+        <Button
+            android:id="@+id/buttonTraffic"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:width="150dp"
+            android:layout_margin="0dp"
+            android:text="Kelikamera"
+            android:textColor="@color/secondary"/>
+
+    </RelativeLayout>
+
+    <!-- Alhaalla oikealla oleva talon kuva -->
+    <ImageView
+        android:id="@+id/homeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_home" />
+
+</RelativeLayout>
+
+
+

@@ -1,0 +1,7 @@
+<resources>
+    <!-- Define your colors here -->
+    <color name="primary">#C6FF00</color>
+    <color name="primary2">#FFFFFF</color>
+    <color name="secondary">#56594D</color>
+    <!-- Add more colors as needed -->
+</resources>
