@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activityMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Hakukenttä ja hakupainike -->
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Hae kunta nimellä"
+        android:layout_marginTop="16dp"
+        />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hae"
+        android:textColor="@color/secondary"
+        android:layout_below="@id/searchEditText"
+        />
+
+    <!-- Viimeaikaisten hakujen lista -->
+    <TextView
+        android:id="@+id/recentSearchesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Viimeaikaiset haut"
+        android:layout_below="@id/searchButton"
+        android:layout_marginTop="16dp"/>
+
+    <ListView
+        android:id="@+id/recentSearchesListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recentSearchesTextView"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/secondary" />
+
+</RelativeLayout>
