@@ -1,15 +1,20 @@
 package com.example.ht;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-import android.app.Activity;
-import android.content.Context;
-import android.widget.Toast;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageView;
+
 import com.google.android.material.tabs.TabLayout;
 
 public class UI {
@@ -33,6 +38,19 @@ public class UI {
 
         // Liitetään ViewPager TabLayoutiin
         tabLayout.setupWithViewPager(viewPager);
+
+        // Asetetaan kotinäppäimen toiminnallisuus
+        ImageView homeButton = ((Activity) context).findViewById(R.id.homeButton);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Luo uusi intent ja käynnistä MainActivity
+                Intent intent = new Intent(context, MainActivity.class);
+                context.startActivity(intent);
+                // Sulje nykyinen activity
+                ((Activity) context).finish();
+            }
+        });
     }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -79,4 +97,5 @@ public class UI {
         }
     }
 }
+
 

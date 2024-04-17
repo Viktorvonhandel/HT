@@ -14,9 +14,22 @@ public class BasicFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_basic, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Haetaan kaupungin nimi, lämpötila ja sääsymboli Municipality-luokasta
+        String cityName = municipality.getCityName();
+        int temperature = municipality.getTemperature();
+        int weatherIconResourceId = municipality.getWeatherIconResourceId();
+
+        // Etsitään näkymät layoutista
+        TextView cityTextView = view.findViewById(R.id.cityTextView);
+        TextView temperatureTextView = view.findViewById(R.id.temperatureTextView);
+        ImageView weatherIconImageView = view.findViewById(R.id.weatherIconImageView);
+
+        // Asetetaan tiedot näkymiin
+        cityTextView.setText(cityName);
+        temperatureTextView.setText(String.valueOf(temperature)); // Huomaa, että tämä voi vaatia muotoilun lisäämistä lämpötilalle
+        weatherIconImageView.setImageResource(weatherIconResourceId);
     }
-}
+

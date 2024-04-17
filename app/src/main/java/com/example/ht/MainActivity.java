@@ -1,10 +1,11 @@
 package com.example.ht;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.fragment.app.FragmentActivity;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
                 if (searchText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Syötä kunta ennen hakua", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Luo DataRetriever-olio ja lähetä kaupunki hakuna
+                    DataRetriever dataRetriever = new DataRetriever();
+                    dataRetriever.getWeatherData(searchText);
+                    dataRetriever.getPopulationData(searchText);
+                    dataRetriever.getTrafficData(searchText);
+                    dataRetriever.getVehicleData(searchText);
+
+                    // Näytä tabit
                     ui.setupTabLayout();
                 }
             }
