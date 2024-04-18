@@ -10,14 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private UI ui;
+    private MunicipalityData municipalityData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ui = new UI(this);
 
         EditText searchEditText = findViewById(R.id.searchEditText);
         Button searchButton = findViewById(R.id.searchButton);
@@ -29,14 +27,22 @@ public class MainActivity extends AppCompatActivity {
                 if (searchText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Syötä kunta ennen hakua", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Luo DataRetriever-olio ja lähetä kaupunki hakuna
+                    // Luo DataRetriever-olio ja hae data
                     DataRetriever dataRetriever = new DataRetriever();
-                    dataRetriever.getWeatherData(searchText);
-                    dataRetriever.getPopulationData(searchText);
-                    dataRetriever.getTrafficData(searchText);
-                    dataRetriever.getVehicleData(searchText);
+                    WeatherData weatherData = dataRetriever.retrieveWeatherData(searchText);
+                    PopulationData populationData = dataRetriever.getPopulation(searchText);
+                    TrafficData trafficData = dataRetriever.getTraffic(searchText);
+                    VehicleData vehicleData = dataRetriever.getVehicles(searchText);
+
+                    // Luo MunicipalityData-olio ja aseta siihen haetut tiedot
+                    municipalityData = new MunicipalityData();
+                    municipalityData.setWeatherData(weatherData);
+                    municipalityData.setPopulationData(populationData);
+                    municipalityData.setTrafficData(trafficData);
+                    municipalityData.setVehicleData(vehicleData);
 
                     // Näytä tabit
+                    UI ui = new UI(MainActivity.this);
                     ui.setupTabLayout();
                 }
             }
