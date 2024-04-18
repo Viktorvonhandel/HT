@@ -5,36 +5,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <!-- Kaupungin nimi -->
-        <TextView
-            android:id="@+id/cityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Placeholder City"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!-- Kaupungin nimi -->
+    <TextView
+        android:id="@+id/cityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Placeholder City"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Lämpötila -->
-        <TextView
-            android:id="@+id/temperatureTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Placeholder Temperature"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!-- Lämpötila -->
+    <TextView
+        android:id="@+id/temperatureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Placeholder Temperature"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Sääsymboli -->
-        <ImageView
-            android:id="@+id/weatherIconImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_placeholder_weather"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/temperatureTextView" />
+    <!-- Sääsymboli -->
+    <ImageView
+        android:id="@+id/weatherIconImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_placeholder_weather"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/temperatureTextView" />
 
-        <!-- Lisää tietoja säätiedoista tarvittaessa -->
+    <!-- Väestötiedot -->
+    <TextView
+        android:id="@+id/populationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Population: Placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cityTextView" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Väestön muutos -->
+    <TextView
+        android:id="@+id/populationChangeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Population Change: Placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/populationTextView" />
+
+    <!-- Työpaikkojen omavaraisuus -->
+    <TextView
+        android:id="@+id/jobSelfSufficiencyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Job Self Sufficiency: Placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/populationChangeTextView" />
+
+    <!-- Työllisyysaste -->
+    <TextView
+        android:id="@+id/employmentRateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Employment Rate: Placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jobSelfSufficiencyTextView" />
+
+    <!-- Lisää tarvittaessa lisää tietoja väestötiedoista -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

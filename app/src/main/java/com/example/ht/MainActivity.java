@@ -1,5 +1,4 @@
 package com.example.ht;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,17 +28,11 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // Luo DataRetriever-olio ja hae data
                     DataRetriever dataRetriever = new DataRetriever();
-                    WeatherData weatherData = dataRetriever.retrieveWeatherData(searchText);
-                    PopulationData populationData = dataRetriever.getPopulation(searchText);
-                    TrafficData trafficData = dataRetriever.getTraffic(searchText);
-                    VehicleData vehicleData = dataRetriever.getVehicles(searchText);
+                    PopulationData populationData = dataRetriever.getPopulationData(searchText);
+                    WeatherData weatherData = dataRetriever.getWeatherData(searchText);
 
                     // Luo MunicipalityData-olio ja aseta siihen haetut tiedot
-                    municipalityData = new MunicipalityData();
-                    municipalityData.setWeatherData(weatherData);
-                    municipalityData.setPopulationData(populationData);
-                    municipalityData.setTrafficData(trafficData);
-                    municipalityData.setVehicleData(vehicleData);
+                    municipalityData = new MunicipalityData(populationData, weatherData, null, null);
 
                     // Näytä tabit
                     UI ui = new UI(MainActivity.this);
@@ -49,3 +42,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+
