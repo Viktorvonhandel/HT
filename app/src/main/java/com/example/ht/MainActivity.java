@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             PopulationData populationData = null;
             WeatherData weatherData = null;
             VehicleData vehicleData = null;
-            TrafficData trafficData = null;
+            EconomicData economicData = null;
 
             // Haetaan tiedot asynkronisesti
             try {
@@ -50,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
                 populationData = dataRetriever.getPopulationData(searchText);
                 weatherData = dataRetriever.getWeatherData(searchText);
                 vehicleData = dataRetriever.getVehicleData(searchText);
-                trafficData = dataRetriever.getTrafficData(searchText);
+                economicData = dataRetriever.getEconomicData(searchText);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return new MunicipalityData(populationData, weatherData, vehicleData, trafficData);
+            return new MunicipalityData(populationData, weatherData, vehicleData, economicData);
         }
 
         @Override
@@ -65,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
                 // Näytä tabit tai päivitä UI muulla tavoin
                 UI ui = new UI(MainActivity.this);
                 ui.setupTabLayout();
+
+                // Päivitä BasicFragment tiedoilla
+                BasicFragment basicFragment = (BasicFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + 0);
+                if (basicFragment != null) {
+                    basicFragment.setMunicipalityData(municipalityData);
+                }
+                VehicleFragment vehicleFragment = (VehicleFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager.getCurrentItem());
+                if (vehicleFragment != null) {
+                    vehicleFragment.setMunicipalityData(municipalityData);
+                }
+
+
             } else {
                 Toast.makeText(MainActivity.this, "Tietoja ei löytynyt", Toast.LENGTH_SHORT).show();
             }

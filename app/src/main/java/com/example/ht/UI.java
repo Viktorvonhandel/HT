@@ -68,7 +68,7 @@ public class UI {
                 case 1:
                     return new VehicleFragment();
                 case 2:
-                    return new TrafficFragment();
+                    return new EconomicFragment();
                 default:
                     return null;
             }
@@ -90,7 +90,7 @@ public class UI {
                 case 1:
                     return "Autot";
                 case 2:
-                    return "Kelikamera";
+                    return "Taloustiedot";
                 default:
                     return null;
             }

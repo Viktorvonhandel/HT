@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class TrafficFragment extends Fragment {
+public class EconomicFragment extends Fragment {
 
-    public TrafficFragment() {
+    public EconomicFragment() {
         // Tyhjä julkisen rakentajan tarvitaan
     }
 
@@ -17,6 +17,6 @@ public class TrafficFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_traffic, container, false);
+        return inflater.inflate(R.layout.fragment_economic, container, false);
     }
 }
