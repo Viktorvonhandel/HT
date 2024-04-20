@@ -1,5 +1,5 @@
 package com.example.ht;
-
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
+
     // AsyncTask tiedon hakemiseksi ja päivittämiseksi UI:ssa
     private class FetchDataTask extends AsyncTask<String, Void, MunicipalityData> {
 
@@ -82,3 +84,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+}
