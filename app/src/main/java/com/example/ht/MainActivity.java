@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText searchEditText = findViewById(R.id.searchEditText);
         Button searchButton = findViewById(R.id.searchButton);
-        viewPager = findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager); // Lisätty viewPagerin määritys
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     // AsyncTask tiedon hakemiseksi ja päivittämiseksi UI:ssa
     private class FetchDataTask extends AsyncTask<String, Void, MunicipalityData> {

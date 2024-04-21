@@ -24,24 +24,25 @@ public class UI {
     }
 
     public void setupTabLayout() {
-        ((Activity) context).setContentView(R.layout.tab_layout);
+        if (context instanceof Activity) {
+            ((Activity) context).setContentView(R.layout.tab_layout);
 
-        TabLayout tabLayout = ((Activity) context).findViewById(R.id.tablayout);
+            TabLayout tabLayout = ((Activity) context).findViewById(R.id.tablayout);
+            if (viewPager != null) {
+                ViewPagerAdapter adapter = new ViewPagerAdapter(((FragmentActivity) context).getSupportFragmentManager(), viewPager);
+                viewPager.setAdapter(adapter);
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(((FragmentActivity) context).getSupportFragmentManager(), viewPager);
-        viewPager.setAdapter(adapter);
+                tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.setupWithViewPager(viewPager);
-
-        ImageView homeButton = ((Activity) context).findViewById(R.id.homeButton);
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MainActivity.class);
-                context.startActivity(intent);
-                ((Activity) context).finish();
-            }
-        });
+                ImageView homeButton = ((Activity) context).findViewById(R.id.homeButton);
+                homeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
+                        ((Activity) context).finish();
+                    }
+        });}}
     }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -84,8 +85,19 @@ public class UI {
         public int getCount() {
             return 3;
         }
-
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Perustiedot";
+                case 1:
+                    return "Autot";
+                case 2:
+                    return "Taloustiedot";
+                default:
+                    return null;
+            }
 
     }
-}
+}}
 
