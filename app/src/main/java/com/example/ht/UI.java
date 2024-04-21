@@ -1,5 +1,5 @@
-// UI.java
 package com.example.ht;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +28,7 @@ public class UI {
 
         TabLayout tabLayout = ((Activity) context).findViewById(R.id.tablayout);
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(((FragmentActivity) context).getSupportFragmentManager(), viewPager); // Muutettu tähän
+        ViewPagerAdapter adapter = new ViewPagerAdapter(((FragmentActivity) context).getSupportFragmentManager(), viewPager);
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
@@ -46,19 +46,17 @@ public class UI {
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
         private ViewPager viewPager;
-        private MunicipalityData municipalityData; // Lisätty tämä
+        private MunicipalityData municipalityData;
 
         ViewPagerAdapter(FragmentManager fm, ViewPager viewPager) {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.viewPager = viewPager;
         }
 
-        // Lisätty tämä metodi
         public void setMunicipalityData(MunicipalityData municipalityData) {
             this.municipalityData = municipalityData;
         }
 
-        // Lisätty tämä metodi
         public MunicipalityData getMunicipalityData() {
             return municipalityData;
         }
@@ -69,9 +67,10 @@ public class UI {
                 case 0:
                     return new BasicFragment();
                 case 1:
-                    return new VehicleFragment();
+                    VehicleFragment vehicleFragment = new VehicleFragment();
+                    vehicleFragment.setMunicipalityData(municipalityData);
+                    return vehicleFragment;
                 case 2:
-                    // Lisätty EconomicFragmentin luomista
                     if (viewPager != null && viewPager.getAdapter() instanceof ViewPagerAdapter) {
                         ViewPagerAdapter pagerAdapter = (ViewPagerAdapter) viewPager.getAdapter();
                         return new EconomicFragment(pagerAdapter.getMunicipalityData());
@@ -86,19 +85,7 @@ public class UI {
             return 3;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Perustiedot";
-                case 1:
-                    return "Autot";
-                case 2:
-                    return "Taloustiedot";
-                default:
-                    return null;
-            }
-        }
+
     }
 }
 
