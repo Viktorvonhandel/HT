@@ -3,7 +3,7 @@ package com.example.ht;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
+import java.io.OutputStream;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,29 +65,13 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
         WeatherData weatherData = null;
         if (municipalityName != null) {
             String requestData = "https://api.openweathermap.org/data/2.5/weather?q=" + municipalityName + ",FI&appid=" + API_KEY + "&units=metric";
-            String jsonData = fetchData(requestData);
+            String jsonData = fetchData(requestData,null,false);
             weatherData = WeatherData.parseData(jsonData);
         } else {
             // Voit käsitellä tässä tilanteen, kun municipalityName on null
             System.out.println("municipalityName is null");
         }
         return weatherData;
-    }
-
-    public PopulationData getPopulationData(String municipalityName) throws IOException, JSONException {
-        PopulationData populationData = null;
-        try {
-            String classificationCode = getClassificationCode(municipalityName);
-            if (classificationCode != null) {
-                String modifiedCode = "KU" + classificationCode;
-                String requestData = "{\"query\":[{\"code\":\"Alue\",\"selection\":{\"filter\":\"agg:_- Kunnat aakkosjärjestyksessä 2023.agg\",\"values\":[\"" + modifiedCode + "\"]}},{\"code\":\"Tiedot\",\"selection\":{\"filter\":\"item\",\"values\":[\"M411\",\"M476\",\"M151\",\"M536\"]}},{\"code\":\"Vuosi\",\"selection\":{\"filter\":\"item\",\"values\":[\"2021\"]}}],\"response\":{\"format\":\"json-stat2\"}}";
-                String populationRawData = fetchData(requestData);
-                populationData = PopulationData.parseData(populationRawData);
-            }
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-        return populationData;
     }
 
     public List<VehicleData> getVehicleData(String municipalityName) throws IOException, JSONException {
@@ -97,7 +81,7 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
             if (classificationCode != null) {
                 String modifiedCode = "KU" + classificationCode;
                 String requestData = "{\"query\":[{\"code\":\"Alue\",\"selection\":{\"filter\":\"agg:TRAFICOM Kunnat aakkosjärjestyksessä 2022.agg\",\"values\":[\"" + modifiedCode + "\"]}}, {\"code\":\"Merkki\",\"selection\":{\"filter\":\"item\",\"values\":[\"YH\",\"401\",\"1205\",\"202\",\"110\",\"1930\",\"201\",\"896\",\"647\",\"2003\",\"206\",\"2264\",\"009\",\"2911\",\"3118\",\"2141\",\"012\",\"014\",\"015\",\"313\",\"3540\",\"366\",\"594\",\"911\",\"151\",\"9778\",\"026\",\"2386\",\"550\",\"410\",\"135\",\"701\",\"013\",\"1049\",\"908\",\"870\",\"861\",\"016\",\"1532\",\"901\",\"150\",\"055\",\"762\",\"714\",\"418\",\"181\",\"438\",\"063\",\"165\",\"241\",\"419\",\"3634\",\"902\",\"243\",\"068\",\"167\",\"171\",\"903\",\"169\",\"702\",\"668\",\"2059\",\"900\",\"247\",\"076\",\"249\",\"1985\",\"361\",\"083\",\"3553\",\"084\",\"251\",\"AAD\",\"085\",\"180\",\"365\",\"197\",\"179\",\"606\",\"413\",\"373\",\"805\",\"782\",\"640\",\"9779\",\"914\",\"187\",\"912\",\"316\",\"2055\",\"905\",\"1141\",\"191\",\"195\",\"708\",\"267\",\"560\",\"897\",\"1157\",\"MUUT\",\"MATK\"]}},{\"code\":\"Käyttöönottovuosi\",\"selection\":{\"filter\":\"item\",\"values\":[\"YH\"]}},{\"code\":\"Käyttövoima\",\"selection\":{\"filter\":\"item\",\"values\":[\"YH\"]}}],\"response\":{\"format\":\"json-stat2\"}}";
-                String vehicleRawData = fetchData(requestData);
+                String vehicleRawData = fetchData(VEHICLE_API_URL, requestData, true); // Käytetään POST-metodia VEHICLE_API_URL:n ollessa käytössä
                 vehicleDataList = VehicleData.parseData(vehicleRawData);
             }
         } catch (IOException | JSONException e) {
@@ -106,10 +90,27 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
         return vehicleDataList;
     }
 
+    public PopulationData getPopulationData(String municipalityName) throws IOException, JSONException {
+        PopulationData populationData = null;
+        try {
+            String classificationCode = getClassificationCode(municipalityName);
+            if (classificationCode != null) {
+                String modifiedCode = "KU" + classificationCode;
+                String requestData = "{\"query\":[{\"code\":\"Alue\",\"selection\":{\"filter\":\"agg:_- Kunnat aakkosjärjestyksessä 2023.agg\",\"values\":[\"" + modifiedCode + "\"]}},{\"code\":\"Tiedot\",\"selection\":{\"filter\":\"item\",\"values\":[\"M411\",\"M476\",\"M151\",\"M536\"]}},{\"code\":\"Vuosi\",\"selection\":{\"filter\":\"item\",\"values\":[\"2021\"]}}],\"response\":{\"format\":\"json-stat2\"}}";
+                String populationRawData = fetchData(POPULATION_API_URL, requestData, true); // Käytetään POST-metodia POPULATION_API_URL:n ollessa käytössä
+                populationData = PopulationData.parseData(populationRawData);
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return populationData;
+    }
+
+
     public EconomicData getEconomicData(String municipalityName) throws IOException, JSONException {
         String municipalityCode = getClassificationCode(municipalityName);
         if (municipalityCode != null) {
-            String economicData = fetchData(ECONOMIC_API_URL);
+            String economicData = fetchData(ECONOMIC_API_URL,null, false);
             return EconomicData.parseData(economicData, municipalityCode);
         }
         return null; // Palauta tyhjä EconomicData-olio tai null, jos tietoja ei löydy
@@ -144,10 +145,19 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
         return null;
     }
 
-    private String fetchData(String requestUrl) throws IOException {
+    private String fetchData(String requestUrl, String requestData, boolean usePost) throws IOException {
         URL url = new URL(requestUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
+        connection.setRequestMethod(usePost ? "POST" : "GET");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setDoOutput(usePost);
+
+        if (usePost && requestData != null) {
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = requestData.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+        }
 
         int responseCode = connection.getResponseCode();
         Log.d("DataRetriever", "Response Code: " + responseCode);
@@ -165,8 +175,6 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
             return null;
         }
     }
-
-
     public interface DataRetrieverListener {
         void onDataRetrieved(Object data);
     }
