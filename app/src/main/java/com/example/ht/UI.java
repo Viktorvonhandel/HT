@@ -1,74 +1,81 @@
+// UI.java
 package com.example.ht;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
-import android.view.View;
-import android.widget.ImageView;
-
 import com.google.android.material.tabs.TabLayout;
 
 public class UI {
     private Context context;
+    private ViewPager viewPager;
 
-    public UI(Context context) {
+    public UI(Context context, ViewPager viewPager) {
         this.context = context;
+        this.viewPager = viewPager;
     }
 
     public void setupTabLayout() {
-        // Asetetaan näkymä tab_layout.xml:stä
         ((Activity) context).setContentView(R.layout.tab_layout);
 
-        // Asetetaan TabLayout ja ViewPager
         TabLayout tabLayout = ((Activity) context).findViewById(R.id.tablayout);
-        ViewPager viewPager = ((Activity) context).findViewById(R.id.viewpager);
 
-        // Luodaan FragmentPagerAdapter ja liitetään se ViewPageriin
-        ViewPagerAdapter adapter = new ViewPagerAdapter(((FragmentActivity) context).getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(((FragmentActivity) context).getSupportFragmentManager(), viewPager); // Muutettu tähän
         viewPager.setAdapter(adapter);
 
-        // Liitetään ViewPager TabLayoutiin
         tabLayout.setupWithViewPager(viewPager);
 
-        // Asetetaan kotinäppäimen toiminnallisuus
         ImageView homeButton = ((Activity) context).findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Luo uusi intent ja käynnistä MainActivity
                 Intent intent = new Intent(context, MainActivity.class);
                 context.startActivity(intent);
-                // Sulje nykyinen activity
                 ((Activity) context).finish();
             }
         });
     }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
-        ViewPagerAdapter(FragmentManager fm) {
+        private ViewPager viewPager;
+        private MunicipalityData municipalityData; // Lisätty tämä
+
+        ViewPagerAdapter(FragmentManager fm, ViewPager viewPager) {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+            this.viewPager = viewPager;
         }
 
-        @NonNull
+        // Lisätty tämä metodi
+        public void setMunicipalityData(MunicipalityData municipalityData) {
+            this.municipalityData = municipalityData;
+        }
+
+        // Lisätty tämä metodi
+        public MunicipalityData getMunicipalityData() {
+            return municipalityData;
+        }
+
         @Override
         public Fragment getItem(int position) {
-            // Valitse fragmentti sen perusteella, mikä välilehti on valittu
             switch (position) {
                 case 0:
                     return new BasicFragment();
                 case 1:
                     return new VehicleFragment();
                 case 2:
-                    return new EconomicFragment();
+                    // Lisätty EconomicFragmentin luomista
+                    if (viewPager != null && viewPager.getAdapter() instanceof ViewPagerAdapter) {
+                        ViewPagerAdapter pagerAdapter = (ViewPagerAdapter) viewPager.getAdapter();
+                        return new EconomicFragment(pagerAdapter.getMunicipalityData());
+                    }
                 default:
                     return null;
             }
@@ -76,14 +83,11 @@ public class UI {
 
         @Override
         public int getCount() {
-            // Palauta välilehtien kokonaismäärä
             return 3;
         }
 
-        @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            // Palauta välilehden nimi sen perusteella, mikä välilehti on valittu
             switch (position) {
                 case 0:
                     return "Perustiedot";
@@ -97,5 +101,4 @@ public class UI {
         }
     }
 }
-
 

@@ -1,16 +1,20 @@
 package com.example.ht;
+
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private MunicipalityData municipalityData;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText searchEditText = findViewById(R.id.searchEditText);
         Button searchButton = findViewById(R.id.searchButton);
+        viewPager = findViewById(R.id.viewPager);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     // AsyncTask tiedon hakemiseksi ja päivittämiseksi UI:ssa
@@ -43,21 +47,27 @@ public class MainActivity extends AppCompatActivity {
             String searchText = params[0];
             PopulationData populationData = null;
             WeatherData weatherData = null;
-            VehicleData vehicleData = null;
+            List<VehicleData> vehicleDataList = null;
             EconomicData economicData = null;
 
             // Haetaan tiedot asynkronisesti
             try {
-                DataRetriever dataRetriever = new DataRetriever();
+                DataRetriever dataRetriever = new DataRetriever(new DataRetriever.DataRetrieverListener() {
+                    @Override
+                    public void onDataRetrieved(Object data) {
+                        // Voit käsitellä saadut tiedot täällä
+                        // Päivitä käyttöliittymä tai tee muuta tarvittavaa
+                    }
+                });
                 populationData = dataRetriever.getPopulationData(searchText);
                 weatherData = dataRetriever.getWeatherData(searchText);
-                vehicleData = dataRetriever.getVehicleData(searchText);
+                vehicleDataList = dataRetriever.getVehicleData(searchText); // Muutettu tässä riviä
                 economicData = dataRetriever.getEconomicData(searchText);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return new MunicipalityData(populationData, weatherData, vehicleData, economicData);
+            return new MunicipalityData(populationData, weatherData, vehicleDataList, economicData); // Muutettu tässä riviä
         }
 
         @Override
@@ -65,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             if (result != null) {
                 municipalityData = result;
                 // Näytä tabit tai päivitä UI muulla tavoin
-                UI ui = new UI(MainActivity.this);
+                UI ui = new UI(MainActivity.this, viewPager);
                 ui.setupTabLayout();
 
                 // Päivitä BasicFragment tiedoilla
@@ -78,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
                     vehicleFragment.setMunicipalityData(municipalityData);
                 }
 
-
             } else {
                 Toast.makeText(MainActivity.this, "Tietoja ei löytynyt", Toast.LENGTH_SHORT).show();
             }
         }
     }
 }
+
