@@ -1,6 +1,5 @@
 package com.example.ht;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +9,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 import java.util.List;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     private MunicipalityData municipalityData;
     private ViewPager viewPager;
 
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText searchEditText = findViewById(R.id.searchEditText);
         Button searchButton = findViewById(R.id.searchButton);
-        viewPager = findViewById(R.id.viewPager); // Lisätty viewPagerin määritys
+        viewPager = findViewById(R.id.viewPager);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 if (searchText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Syötä kunta ennen hakua", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Luo DataRetriever-olio ja hae data asynkronisesti
+
                     new FetchDataTask().execute(searchText);
                 }
             }
@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // AsyncTask tiedon hakemiseksi ja päivittämiseksi UI:ssa
     private class FetchDataTask extends AsyncTask<String, Void, MunicipalityData> {
 
         @Override
@@ -51,48 +50,63 @@ public class MainActivity extends AppCompatActivity {
             List<VehicleData> vehicleDataList = null;
             EconomicData economicData = null;
 
-            // Haetaan tiedot asynkronisesti
             try {
                 DataRetriever dataRetriever = new DataRetriever(new DataRetriever.DataRetrieverListener() {
                     @Override
                     public void onDataRetrieved(Object data) {
-                        // Voit käsitellä saadut tiedot täällä
-                        // Päivitä käyttöliittymä tai tee muuta tarvittavaa
+
                     }
                 });
+
                 populationData = dataRetriever.getPopulationData(searchText);
+                Log.d(TAG, "Population Data Retrieved: " + populationData);
+
                 weatherData = dataRetriever.getWeatherData(searchText);
-                vehicleDataList = dataRetriever.getVehicleData(searchText); // Muutettu tässä riviä
+                Log.d(TAG, "Weather Data Retrieved: " + weatherData);
+
+                vehicleDataList = dataRetriever.getVehicleData(searchText);
+                for (VehicleData vehicleData : vehicleDataList) {
+                    Log.d(TAG, "Vehicle Data Retrieved: " + vehicleData);
+                }
+
                 economicData = dataRetriever.getEconomicData(searchText);
+                Log.d(TAG, "Economic Data Retrieved: " + economicData);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return new MunicipalityData(populationData, weatherData, vehicleDataList, economicData); // Muutettu tässä riviä
+            return new MunicipalityData(populationData, weatherData, vehicleDataList, economicData);
         }
 
         @Override
         protected void onPostExecute(MunicipalityData result) {
             if (result != null) {
                 municipalityData = result;
-                // Näytä tabit tai päivitä UI muulla tavoin
+                // Näytä tabit
                 UI ui = new UI(MainActivity.this, viewPager);
                 ui.setupTabLayout();
 
-                // Päivitä BasicFragment tiedoilla
+                // Päivitä BF
                 BasicFragment basicFragment = (BasicFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + 0);
                 if (basicFragment != null) {
                     basicFragment.setMunicipalityData(municipalityData);
                 }
+
+                // Päivitä VF
                 VehicleFragment vehicleFragment = (VehicleFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager.getCurrentItem());
                 if (vehicleFragment != null) {
                     vehicleFragment.setMunicipalityData(municipalityData);
                 }
 
+                // Päivitä EF
+                EconomicFragment economicFragment = (EconomicFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + 2);
+                if (economicFragment != null) {
+                    economicFragment.setMunicipalityData(municipalityData);
+                }
             } else {
                 Toast.makeText(MainActivity.this, "Tietoja ei löytynyt", Toast.LENGTH_SHORT).show();
             }
         }
     }
-}
 
+}

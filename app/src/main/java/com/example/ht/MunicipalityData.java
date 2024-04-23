@@ -5,7 +5,7 @@ import java.util.List;
 public class MunicipalityData {
     private PopulationData populationData;
     private WeatherData weatherData;
-    private List<VehicleData> vehicleDataList; // Muutettu tässä riviä
+    private List<VehicleData> vehicleDataList;
     private EconomicData economicData;
 
     public MunicipalityData(PopulationData populationData, WeatherData weatherData, List<VehicleData> vehicleDataList, EconomicData economicData) { // Muutettu tässä riviä
@@ -30,4 +30,8 @@ public class MunicipalityData {
     public EconomicData getEconomicData() {
         return economicData;
     }
+
+
 }
+
+

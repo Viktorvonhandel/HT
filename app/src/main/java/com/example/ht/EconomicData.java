@@ -38,23 +38,33 @@ public class EconomicData {
         return debtRatio5;
     }
 
-    // Metodi taloudellisten tietojen parsimiseen
+
     public static EconomicData parseData(String jsonData, String municipalityCode) throws JSONException {
         JSONArray jsonArray = new JSONArray(jsonData);
         double[] debtRatios = new double[5];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             if (jsonObject.getInt("region") == Integer.parseInt(municipalityCode)) {
-                // Lisää viisi debtRatioa taulukkoon
-                debtRatios[0] = jsonObject.getDouble("debtRatio1");
-                debtRatios[1] = jsonObject.getDouble("debtRatio2");
-                debtRatios[2] = jsonObject.getDouble("debtRatio3");
-                debtRatios[3] = jsonObject.getDouble("debtRatio4");
-                debtRatios[4] = jsonObject.getDouble("debtRatio5");
-                break; // Lopeta silmukka kun tiedot on löydetty
+
+                debtRatios[0] = jsonObject.getDouble("value");
+                debtRatios[1] = jsonObject.getDouble("value");
+                debtRatios[2] = jsonObject.getDouble("value");
+                debtRatios[3] = jsonObject.getDouble("value");
+                debtRatios[4] = jsonObject.getDouble("value");
+                break;
             }
         }
         return new EconomicData(debtRatios[0], debtRatios[1], debtRatios[2], debtRatios[3], debtRatios[4]);
+    }
+
+    public String toString() {
+        return "EconomicData{" +
+                "debtRatio1=" + debtRatio1 +
+                ", debtRatio2=" + debtRatio2 +
+                ", debtRatio3=" + debtRatio3 +
+                ", debtRatio4=" + debtRatio4 +
+                ", debtRatio5=" + debtRatio5 +
+                '}';
     }
 }
 

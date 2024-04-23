@@ -4,6 +4,8 @@ package com.example.ht;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
+
 
 public class PopulationData {
     private int population;
@@ -36,10 +38,21 @@ public class PopulationData {
 
     public static PopulationData parseData(String rawData) throws JSONException {
         JSONObject jsonObject = new JSONObject(rawData);
-        int population = jsonObject.getInt("population");
-        double populationChange = jsonObject.getDouble("populationChange");
-        double jobSelfSufficiency = jsonObject.getDouble("jobSelfSufficiency");
-        double employmentRate = jsonObject.getDouble("employmentRate");
+        JSONArray values = jsonObject.getJSONArray("value");
+        int population = values.getInt(0);
+        double populationChange = values.getDouble(1);
+        double jobSelfSufficiency = values.getDouble(2);
+        double employmentRate = values.getDouble(3);
         return new PopulationData(population, populationChange, jobSelfSufficiency, employmentRate);
     }
+    @Override
+    public String toString() {
+        return "PopulationData{" +
+                "population=" + population +
+                ", populationChange=" + populationChange +
+                ", jobSelfSufficiency=" + jobSelfSufficiency +
+                ", employmentRate=" + employmentRate +
+                '}';
+    }
+
 }

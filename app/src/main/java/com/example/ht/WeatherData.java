@@ -1,4 +1,3 @@
-// WeatherData.java
 package com.example.ht;
 
 import org.json.JSONException;
@@ -33,6 +32,7 @@ public class WeatherData {
         }
 
     }
+
     public String getCityName() {
         return cityName;
     }
@@ -40,7 +40,18 @@ public class WeatherData {
     public double getTemperature() {
         return temperature;
     }
+
     public double getIconCode() {
         return temperature;
+    }
+
+
+    @Override
+    public String toString() {
+        return "WeatherData{" +
+                "cityName='" + cityName + '\'' +
+                ", temperature=" + temperature +
+                ", iconCode='" + iconCode + '\'' +
+                '}';
     }
 }

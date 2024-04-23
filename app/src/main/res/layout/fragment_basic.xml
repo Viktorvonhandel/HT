@@ -1,88 +1,52 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Kaupungin nimi -->
-    <TextView
-        android:id="@+id/cityTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Placeholder City"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Lämpötila -->
-    <TextView
-        android:id="@+id/temperatureTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Placeholder Temperature"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Sääsymboli -->
-    <ImageView
-        android:id="@+id/weatherIconImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/temperatureTextView" />
-
-    <!-- Väestötiedot -->
-
-    <!-- Väestön muutos -->
-
-    <!-- Työpaikkojen omavaraisuus -->
-
-    <!-- Työllisyysaste -->
     <TextView
         android:id="@+id/populationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="48dp"
-        android:text="Population: Placeholder"
+        android:layout_marginTop="16dp"
+        android:text="Population"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cityTextView" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/populationChangeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="60dp"
-        android:text="Population Change: Placeholder"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/populationTextView" />
+        android:layout_below="@id/populationTextView"
+        android:layout_marginTop="8dp"
+        android:text="Population Change"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/jobSelfSufficiencyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="Job Self Sufficiency: Placeholder"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/populationChangeTextView" />
+        android:layout_below="@id/populationChangeTextView"
+        android:layout_marginTop="8dp"
+        android:text="Job Self Sufficiency"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/employmentRateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="88dp"
-        android:text="Employment Rate: Placeholder"
+        android:layout_below="@id/jobSelfSufficiencyTextView"
+        android:layout_marginTop="8dp"
+        android:text="Employment Rate"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/weatherTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/employmentRateTextView"
+        android:layout_marginTop="16dp"
+        android:text="Weather"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/jobSelfSufficiencyTextView" />
+        android:textStyle="bold" />
 
-    <!-- Lisää tarvittaessa lisää tietoja väestötiedoista -->
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
