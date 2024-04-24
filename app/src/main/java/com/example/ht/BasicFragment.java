@@ -8,9 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import android.util.Log;
 
 public class BasicFragment extends Fragment {
 
+    private static final String TAG = "BasicFragment";
     private MunicipalityData municipalityData;
 
     public BasicFragment() {
@@ -18,6 +20,7 @@ public class BasicFragment extends Fragment {
     }
 
     public void setMunicipalityData(MunicipalityData municipalityData) {
+        Log.d(TAG, "MunicipalityData set in BasicFragment: " + municipalityData);
         this.municipalityData = municipalityData;
         updateUI();
     }

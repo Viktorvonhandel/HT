@@ -34,7 +34,7 @@
             android:text="Kelikamera" />
 
     </com.google.android.material.tabs.TabLayout>
-
+    <!-- täällä pitäisi näyttää fragmentit-->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

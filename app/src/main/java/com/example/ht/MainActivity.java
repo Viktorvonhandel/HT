@@ -1,15 +1,16 @@
 package com.example.ht;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
 import java.util.List;
-import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -21,9 +22,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Log.d(TAG, "onCreate: Activity created");
+
         EditText searchEditText = findViewById(R.id.searchEditText);
         Button searchButton = findViewById(R.id.searchButton);
-        viewPager = findViewById(R.id.viewPager);
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,16 +36,13 @@ public class MainActivity extends AppCompatActivity {
                 if (searchText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Syötä kunta ennen hakua", Toast.LENGTH_SHORT).show();
                 } else {
-
                     new FetchDataTask().execute(searchText);
                 }
             }
         });
     }
 
-
     private class FetchDataTask extends AsyncTask<String, Void, MunicipalityData> {
-
         @Override
         protected MunicipalityData doInBackground(String... params) {
             String searchText = params[0];
@@ -50,11 +51,13 @@ public class MainActivity extends AppCompatActivity {
             List<VehicleData> vehicleDataList = null;
             EconomicData economicData = null;
 
+            Log.d(TAG, "doInBackground: Fetching data for " + searchText);
+
             try {
                 DataRetriever dataRetriever = new DataRetriever(new DataRetriever.DataRetrieverListener() {
                     @Override
                     public void onDataRetrieved(Object data) {
-
+                        // Not needed for now
                     }
                 });
 
@@ -82,31 +85,54 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(MunicipalityData result) {
             if (result != null) {
                 municipalityData = result;
-                // Näytä tabit
+                Log.d(TAG, "Municipality Data Retrieved: " + municipalityData);
+                setContentView(R.layout.tab_layout);
+                viewPager = findViewById(R.id.viewPager);
+
+                // Luodaan uusi UI-olio ja asetetaan se ylävaiheeseen
+                Log.d(TAG, "Creating new UI instance");
                 UI ui = new UI(MainActivity.this, viewPager);
                 ui.setupTabLayout();
 
-                // Päivitä BF
-                BasicFragment basicFragment = (BasicFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + 0);
+                // Lisätään tarkistukset
+                int currentItem = viewPager.getCurrentItem();
+                Log.d(TAG, "Current ViewPager item: " + currentItem);
+                Log.d(TAG, "ViewPager adapter: " + viewPager.getAdapter());
+                Log.d(TAG, "FragmentManager: " + getSupportFragmentManager());
+
+                // Päivitetään fragmentit
+                Log.d(TAG, "Trying to update BasicFragment");
+                BasicFragment basicFragment = (BasicFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + 0);
                 if (basicFragment != null) {
                     basicFragment.setMunicipalityData(municipalityData);
+                    Log.d(TAG, "BasicFragment updated with MunicipalityData: " + municipalityData);
+                } else {
+                    Log.d(TAG, "BasicFragment is null or not found");
                 }
 
-                // Päivitä VF
-                VehicleFragment vehicleFragment = (VehicleFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager.getCurrentItem());
+                // Päivitetään VehicleFragment
+                Log.d(TAG, "Trying to update VehicleFragment");
+                VehicleFragment vehicleFragment = (VehicleFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + currentItem);
                 if (vehicleFragment != null) {
                     vehicleFragment.setMunicipalityData(municipalityData);
+                    Log.d(TAG, "VehicleFragment updated with MunicipalityData: " + municipalityData);
+                } else {
+                    Log.d(TAG, "VehicleFragment is null or not found");
                 }
 
-                // Päivitä EF
-                EconomicFragment economicFragment = (EconomicFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + 2);
+                // Päivitetään EconomicFragment
+                Log.d(TAG, "Trying to update EconomicFragment");
+                EconomicFragment economicFragment = (EconomicFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + 2);
                 if (economicFragment != null) {
                     economicFragment.setMunicipalityData(municipalityData);
+                    Log.d(TAG, "EconomicFragment updated with MunicipalityData: " + municipalityData);
+                } else {
+                    Log.d(TAG, "EconomicFragment is null or not found");
                 }
             } else {
                 Toast.makeText(MainActivity.this, "Tietoja ei löytynyt", Toast.LENGTH_SHORT).show();
             }
         }
-    }
 
+    }
 }
