@@ -14,13 +14,18 @@ public class BasicFragment extends Fragment {
 
     private static final String TAG = "BasicFragment";
     private MunicipalityData municipalityData;
-
-    public BasicFragment() {
-
+    public static BasicFragment newInstance() {
+        return new BasicFragment();
     }
+
 
     public void setMunicipalityData(MunicipalityData municipalityData) {
         Log.d(TAG, "MunicipalityData set in BasicFragment: " + municipalityData);
+
+        // Lisää tämä rivi
+        Log.d(TAG, "PopulationData set in BasicFragment: " + municipalityData.getPopulationData());
+        Log.d(TAG, "WeatherData set in BasicFragment: " + municipalityData.getWeatherData());
+
         this.municipalityData = municipalityData;
         updateUI();
     }
@@ -62,5 +67,6 @@ public class BasicFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         updateUI();
+        getView().setTag("BasicFragment");
     }
 }

@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             return new MunicipalityData(populationData, weatherData, vehicleDataList, economicData);
         }
 
-        @Override
         protected void onPostExecute(MunicipalityData result) {
             if (result != null) {
                 municipalityData = result;
@@ -92,17 +91,15 @@ public class MainActivity extends AppCompatActivity {
                 // Luodaan uusi UI-olio ja asetetaan se ylävaiheeseen
                 Log.d(TAG, "Creating new UI instance");
                 UI ui = new UI(MainActivity.this, viewPager);
-                ui.setupTabLayout();
-
-                // Lisätään tarkistukset
-                int currentItem = viewPager.getCurrentItem();
-                Log.d(TAG, "Current ViewPager item: " + currentItem);
-                Log.d(TAG, "ViewPager adapter: " + viewPager.getAdapter());
-                Log.d(TAG, "FragmentManager: " + getSupportFragmentManager());
+                ui.setupTabLayout(municipalityData);
 
                 // Päivitetään fragmentit
                 Log.d(TAG, "Trying to update BasicFragment");
-                BasicFragment basicFragment = (BasicFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + 0);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                // Päivitetään BasicFragment
+                String basicFragmentTag = "android:switcher:" + viewPager.getId() + ":0";
+                BasicFragment basicFragment = (BasicFragment) fragmentManager.findFragmentByTag(basicFragmentTag);
                 if (basicFragment != null) {
                     basicFragment.setMunicipalityData(municipalityData);
                     Log.d(TAG, "BasicFragment updated with MunicipalityData: " + municipalityData);
@@ -111,8 +108,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Päivitetään VehicleFragment
-                Log.d(TAG, "Trying to update VehicleFragment");
-                VehicleFragment vehicleFragment = (VehicleFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + currentItem);
+                int currentItem = viewPager.getCurrentItem();
+                String vehicleFragmentTag = "android:switcher:" + viewPager.getId() + ":" + currentItem;
+                VehicleFragment vehicleFragment = (VehicleFragment) fragmentManager.findFragmentByTag(vehicleFragmentTag);
                 if (vehicleFragment != null) {
                     vehicleFragment.setMunicipalityData(municipalityData);
                     Log.d(TAG, "VehicleFragment updated with MunicipalityData: " + municipalityData);
@@ -121,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Päivitetään EconomicFragment
-                Log.d(TAG, "Trying to update EconomicFragment");
-                EconomicFragment economicFragment = (EconomicFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + 2);
+                String economicFragmentTag = "android:switcher:" + viewPager.getId() + ":2";
+                EconomicFragment economicFragment = (EconomicFragment) fragmentManager.findFragmentByTag(economicFragmentTag);
                 if (economicFragment != null) {
                     economicFragment.setMunicipalityData(municipalityData);
                     Log.d(TAG, "EconomicFragment updated with MunicipalityData: " + municipalityData);
@@ -133,6 +131,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Tietoja ei löytynyt", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 }
