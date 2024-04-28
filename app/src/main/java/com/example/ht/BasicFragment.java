@@ -1,4 +1,5 @@
 package com.example.ht;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ public class BasicFragment extends Fragment {
 
     private TextView populationTextView;
     private TextView weatherTextView;
+    private MunicipalityData municipalityData;
 
     public static BasicFragment newInstance() {
         return new BasicFragment();
@@ -33,6 +35,12 @@ public class BasicFragment extends Fragment {
         populationTextView = view.findViewById(R.id.populationTextView);
         weatherTextView = view.findViewById(R.id.weatherTextView);
         Log.d(TAG, "onCreateView");
+
+        // Tarkistetaan, onko datan asettamista varten
+        if (municipalityData != null) {
+            setMunicipalityData(municipalityData);
+        }
+
         return view;
     }
 
@@ -43,7 +51,9 @@ public class BasicFragment extends Fragment {
     }
 
     public void setMunicipalityData(MunicipalityData municipalityData) {
-        if (municipalityData != null) {
+        this.municipalityData = municipalityData;
+        Log.d(TAG, "Tätä ei kyllä vissiin kutsuta");
+        if (municipalityData != null && populationTextView != null && weatherTextView != null) {
             PopulationData populationData = municipalityData.getPopulationData();
             WeatherData weatherData = municipalityData.getWeatherData();
 
