@@ -1,53 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/populationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Population"
-        android:textSize="16sp"
+        android:text="Population Data"
+        android:textSize="18sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/populationChangeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/populationTextView"
-        android:layout_marginTop="139dp"
-        android:text="Population Change"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/jobSelfSufficiencyTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/populationChangeTextView"
-        android:layout_marginTop="66dp"
-        android:text="Job Self Sufficiency"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/employmentRateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/jobSelfSufficiencyTextView"
-        android:layout_marginTop="38dp"
-        android:text="Employment Rate"
-        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/weatherTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/employmentRateTextView"
-        android:layout_marginTop="21dp"
-        android:text="Weather"
-        android:textSize="16sp"
+        android:layout_marginTop="24dp"
+        android:text="Weather Data"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
-</RelativeLayout>
+</LinearLayout>

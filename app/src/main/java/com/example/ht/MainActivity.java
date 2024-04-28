@@ -1,13 +1,14 @@
 package com.example.ht;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         EditText searchEditText = findViewById(R.id.searchEditText);
         Button searchButton = findViewById(R.id.searchButton);
 
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +40,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Lisätään homeButtonin toiminnallisuus
+
     }
+
 
     private class FetchDataTask extends AsyncTask<String, Void, MunicipalityData> {
         @Override
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "MunicipalityData Retrieved: " + municipalityData);
 
                 setContentView(R.layout.tab_layout);
+                ImageButton homeButton = findViewById(R.id.homeButton); // Lisätty homeButton
                 viewPager = findViewById(R.id.viewPager);
                 ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), municipalityData);
 
@@ -91,6 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
                 // Update fragments with data
                 updateFragmentsWithData();
+
+                homeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
             } else {
                 Toast.makeText(MainActivity.this, "Tietoja ei löytynyt", Toast.LENGTH_SHORT).show();
             }

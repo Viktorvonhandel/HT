@@ -1,9 +1,9 @@
 package com.example.ht;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -43,15 +43,8 @@ public class UI {
                     tab.setText(adapter.getPageTitle(position));
                 }).attach();
 
-                ImageView homeButton = activity.findViewById(R.id.homeButton);
-                homeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, MainActivity.class);
-                        context.startActivity(intent);
-                        activity.finish();
-                    }
-                });
+                // Lisää homeButtonin toiminnallisuus
+                setupHomeButton(activity);
             } else {
                 Log.e(TAG, "ViewPager or FragmentManager is null");
             }
@@ -59,7 +52,20 @@ public class UI {
             Log.e(TAG, "Context is not an instance of AppCompatActivity or ViewPager is null");
         }
     }
+
+    private void setupHomeButton(AppCompatActivity activity) {
+        ImageView homeButton = activity.findViewById(R.id.homeButton);
+        homeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                context.startActivity(intent);
+                activity.finish();
+            }
+        });
+    }
 }
+
 
 
 
