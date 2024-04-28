@@ -1,5 +1,6 @@
 package com.example.ht;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,35 +9,44 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
 
 public class BasicFragment extends Fragment {
-
     private static final String TAG = "BasicFragment";
-    private MunicipalityData municipalityData;
+
+    private TextView populationTextView;
+    private TextView weatherTextView;
+
     public static BasicFragment newInstance() {
         return new BasicFragment();
     }
 
-
-    public void setMunicipalityData(MunicipalityData municipalityData) {
-        Log.d(TAG, "MunicipalityData set in BasicFragment: " + municipalityData);
-
-        // Lisää tämä rivi
-        Log.d(TAG, "PopulationData set in BasicFragment: " + municipalityData.getPopulationData());
-        Log.d(TAG, "WeatherData set in BasicFragment: " + municipalityData.getWeatherData());
-
-        this.municipalityData = municipalityData;
-        updateUI();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate-OLLAAN BASICFRAGMENTISSA PERKELE");
     }
 
-    private void updateUI() {
-        if (getView() != null && municipalityData != null) {
-            TextView populationTextView = getView().findViewById(R.id.populationTextView);
-            TextView weatherTextView = getView().findViewById(R.id.weatherTextView);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_basic, container, false);
+        populationTextView = view.findViewById(R.id.populationTextView);
+        weatherTextView = view.findViewById(R.id.weatherTextView);
+        Log.d(TAG, "onCreateView");
+        return view;
+    }
 
-            //  pdata
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+    }
+
+    public void setMunicipalityData(MunicipalityData municipalityData) {
+        if (municipalityData != null) {
             PopulationData populationData = municipalityData.getPopulationData();
+            WeatherData weatherData = municipalityData.getWeatherData();
+
             if (populationData != null) {
                 String populationText = "Population: " + populationData.getPopulation() +
                         "\nPopulation Change: " + populationData.getPopulationChange() +
@@ -45,8 +55,6 @@ public class BasicFragment extends Fragment {
                 populationTextView.setText(populationText);
             }
 
-            //  wdata
-            WeatherData weatherData = municipalityData.getWeatherData();
             if (weatherData != null) {
                 String weatherText = "City: " + weatherData.getCityName() +
                         "\nTemperature: " + weatherData.getTemperature() +
@@ -55,18 +63,8 @@ public class BasicFragment extends Fragment {
             }
         }
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_basic, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        updateUI();
-        getView().setTag("BasicFragment");
-    }
 }
+
+
+
+

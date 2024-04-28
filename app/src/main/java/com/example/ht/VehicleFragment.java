@@ -22,6 +22,7 @@ public class VehicleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_vehicle, container, false);
         titleTextView = view.findViewById(R.id.titleTextView);
         recyclerView = view.findViewById(R.id.vehicleRecyclerView);
+
         adapter = new VehicleDataAdapter();
 
         if (municipalityData != null) {
