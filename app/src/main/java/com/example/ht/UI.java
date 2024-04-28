@@ -52,7 +52,7 @@ public class UI {
             Log.e(TAG, "Context is not an instance of AppCompatActivity or ViewPager is null");
         }
     }
-
+//NIH
     private void setupHomeButton(AppCompatActivity activity) {
         ImageView homeButton = activity.findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new OnClickListener() {

@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 ImageButton homeButton = findViewById(R.id.homeButton); // Lisätty homeButton
                 viewPager = findViewById(R.id.viewPager);
                 ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), municipalityData);
-
+//NÖH
                 viewPager.setAdapter(adapter);
 
                 TabLayout tabLayout = findViewById(R.id.tablayout);

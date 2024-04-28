@@ -64,7 +64,7 @@ public class BasicFragment extends Fragment {
                         "\nEmployment Rate: " + populationData.getEmploymentRate();
                 populationTextView.setText(populationText);
             }
-
+//NIINKÖ
             if (weatherData != null) {
                 String weatherText = "City: " + weatherData.getCityName() +
                         "\nTemperature: " + weatherData.getTemperature() +
