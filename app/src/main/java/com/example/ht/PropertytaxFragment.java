@@ -10,23 +10,23 @@ import java.util.List;
 import android.widget.TextView;
 
 
-public class VehicleFragment extends Fragment {
+public class PropertytaxFragment extends Fragment {
 
     private MunicipalityData municipalityData;
     private RecyclerView recyclerView;
-    private VehicleDataAdapter adapter;
+    private PropertytaxDataAdapter adapter;
     private TextView titleTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_vehicle, container, false);
+        View view = inflater.inflate(R.layout.fragment_propertytax, container, false);
         titleTextView = view.findViewById(R.id.titleTextView);
-        recyclerView = view.findViewById(R.id.vehicleRecyclerView);
+        recyclerView = view.findViewById(R.id.propertytaxRecyclerView);
 
-        adapter = new VehicleDataAdapter();
+        adapter = new PropertytaxDataAdapter();
 
         if (municipalityData != null) {
-            showVehicleData();
+            showPropertytaxData();
         }
 
         return view;
@@ -35,13 +35,13 @@ public class VehicleFragment extends Fragment {
     public void setMunicipalityData(MunicipalityData municipalityData) {
         this.municipalityData = municipalityData;
         if (recyclerView != null && adapter != null) {
-            showVehicleData();
+            showPropertytaxData();
         }
     }
 
-    private void showVehicleData() {
-        List<VehicleData> vehicleDataList = municipalityData.getVehicleDataList();
-        adapter.setVehicleDataList(vehicleDataList);
+    private void showPropertytaxData() {
+        List<PropertytaxData> propertytaxDataList = municipalityData.getPropertytaxDataList();
+        adapter.setPropertytaxDataList(propertytaxDataList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }

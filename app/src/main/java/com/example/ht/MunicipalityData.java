@@ -8,13 +8,13 @@ import java.util.List;
 public class MunicipalityData implements Serializable {
     private PopulationData populationData;
     private WeatherData weatherData;
-    private List<VehicleData> vehicleDataList;
+    private List<PropertytaxData> propertytaxDataList;
     private EconomicData economicData;
 
-    public MunicipalityData(PopulationData populationData, WeatherData weatherData, List<VehicleData> vehicleDataList, EconomicData economicData) {
+    public MunicipalityData(PopulationData populationData, WeatherData weatherData, List<PropertytaxData> propertytaxDataList, EconomicData economicData) {
         this.populationData = populationData;
         this.weatherData = weatherData;
-        this.vehicleDataList = vehicleDataList;
+        this.propertytaxDataList = propertytaxDataList;
         this.economicData = economicData;
     }
 
@@ -26,8 +26,8 @@ public class MunicipalityData implements Serializable {
         return weatherData;
     }
 
-    public List<VehicleData> getVehicleDataList() {
-        return vehicleDataList;
+    public List<PropertytaxData> getPropertytaxDataList() {
+        return propertytaxDataList;
     }
 
     public EconomicData getEconomicData() {

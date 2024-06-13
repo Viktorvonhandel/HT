@@ -17,7 +17,7 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
     private static final String API_KEY = "7d0c5fe9d064e6866204e39457bf9efe";
     private static final String CLASSIFICATION_ITEMS_API_URL = "https://data.stat.fi/api/classifications/v2/classifications/kunta_1_20240101/classificationItems?content=data&meta=max&lang=fi";
 
-    private static final String VEHICLE_API_URL = "https://vero2.stat.fi:443/PXWeb/api/v1/fi/Vero/Kiinteistoverot/kive_101.px";
+    private static final String PROPERTYTAX_API_URL = "https://vero2.stat.fi:443/PXWeb/api/v1/fi/Vero/Kiinteistoverot/kive_101.px";
     private static final String POPULATION_API_URL = "https://pxdata.stat.fi/PxWeb/api/v1/fi/Kuntien_avainluvut/2023/kuntien_avainluvut_2023_aikasarja.px";
     private static final String ECONOMIC_API_URL = "https://sotkanet.fi/rest/1.1/json?indicator=3856&years=2021&years=2020&genders=total";
 
@@ -45,8 +45,8 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
                     return getPopulationData(searchText);
                 case "weather":
                     return getWeatherData(searchText);
-                case "vehicle":
-                    return getVehicleData(searchText);
+                case "propertytax":
+                    return getPropertytaxData(searchText);
                 case "economic":
                     return getEconomicData(searchText);
                 default:
@@ -90,26 +90,26 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
         return weatherData;
     }
 
-    public List<VehicleData> getVehicleData(String municipalityName) throws IOException, JSONException {
-        List<VehicleData> vehicleDataList = null;
+    public List<PropertytaxData> getPropertytaxData(String municipalityName) throws IOException, JSONException {
+        List<PropertytaxData> propertytaxDataList = null;
         try {
             String classificationCode = getClassificationCode(municipalityName);
             if (classificationCode != null) {
 
-                String requestData = "{\"query\":[{\"code\":\"Alue\",\"selection\":{\"filter\":\"item\",\"values\":[\"" + classificationCode + "\"]}},{\"code\":\"Asiakkaan oikeudellinen muoto\",\"selection\":{\"filter\":\"item\",\"values\":[\"10\",\"30\",\"20\",\"40\",\"50\",\"60\",\"70\"]}},{\"code\":\"Vuosi\",\"selection\":{\"filter\":\"item\",\"values\":[\"2023\"]}},{\"code\":\"Kiinteistövero\",\"selection\":{\"filter\":\"item\",\"values\":[\"SSSSS\"]}},{\"code\":\"Tiedot\",\"selection\":{\"filter\":\"item\",\"values\":[\"Keskiarvo_vero\"]}}],\"response\":{\"format\":\"json-stat\"}}";
+                String requestData = "{\"query\":[{\"code\":\"Alue\",\"selection\":{\"filter\":\"item\",\"values\":[\"" + classificationCode + "\"]}},{\"code\":\"Asiakkaan oikeudellinen muoto\",\"selection\":{\"filter\":\"item\",\"values\":[\"10\",\"30\",\"20\",\"40\",\"50\",\"60\",\"70\"]}},{\"code\":\"Vuosi\",\"selection\":{\"filter\":\"item\",\"values\":[\"2023\"]}},{\"code\":\"Kiinteistövero\",\"selection\":{\"filter\":\"item\",\"values\":[\"SSSSS\"]}},{\"code\":\"Tiedot\",\"selection\":{\"filter\":\"item\",\"values\":[\"Arvo_osuus_vero\"]}}],\"response\":{\"format\":\"json-stat\"}}";
 
                 int retries = 0;
                 while (retries < MAX_RETRIES) {
-                    String vehicleRawData = fetchData(VEHICLE_API_URL, requestData, true); // Käytetään POST-metodia VEHICLE_API_URL:n ollessa käytössä
-                    if (vehicleRawData != null) {
-                        JSONObject jsonObject = new JSONObject(vehicleRawData);
-                        vehicleDataList = VehicleData.parseData(jsonObject);
+                    String propertytaxRawData = fetchData(PROPERTYTAX_API_URL, requestData, true); // Käytetään POST-metodia PROPERTYTAX_API_URL:n ollessa käytössä
+                    if (propertytaxRawData != null) {
+                        JSONObject jsonObject = new JSONObject(propertytaxRawData);
+                        propertytaxDataList = PropertytaxData.parseData(jsonObject);
 
-                        Log.d("DataRetriever", "Vehicle Data: " + vehicleDataList);
+                        Log.d("DataRetriever", "Propertytax Data: " + propertytaxDataList);
                         break;
                     } else {
                         retries++;
-                        Log.e("DataRetriever", "Failed to fetch vehicle data, retrying... Attempt: " + retries);
+                        Log.e("DataRetriever", "Failed to fetch propertytax data, retrying... Attempt: " + retries);
                         try {
                             Thread.sleep(RETRY_INTERVAL_MS);
                         } catch (InterruptedException e) {
@@ -121,7 +121,7 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        return vehicleDataList;
+        return propertytaxDataList;
     }
 
     public PopulationData getPopulationData(String municipalityName) throws IOException, JSONException {

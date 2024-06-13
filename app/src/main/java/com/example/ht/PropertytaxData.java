@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class VehicleData {
+public class PropertytaxData {
     private String group;
     private double value;
 
-    public VehicleData(String group, double value) {
+    public PropertytaxData(String group, double value) {
         this.group = group;
         this.value = value;
     }
@@ -32,8 +32,8 @@ public class VehicleData {
         this.value = value;
     }
 
-    public static List<VehicleData> parseData(JSONObject jsonObject) throws JSONException {
-        List<VehicleData> vehicleDataList = new ArrayList<>();
+    public static List<PropertytaxData> parseData(JSONObject jsonObject) throws JSONException {
+        List<PropertytaxData> propertytaxDataList = new ArrayList<>();
 
         JSONObject categoryObject = jsonObject.getJSONObject("dataset")
                 .getJSONObject("dimension")
@@ -60,13 +60,13 @@ public class VehicleData {
                 // Aseta null-arvo nollaksi
                 value = 0;
             }
-            vehicleDataList.add(new VehicleData(label, value));
+            propertytaxDataList.add(new PropertytaxData(label, value));
         }
 
-        return vehicleDataList;
+        return propertytaxDataList;
     }
     public String toString() {
-        return "VehicleData{" +
+        return "PropertytaxData{" +
                 "group='" + group + '\'' +
                 ", value=" + value +
                 '}';

@@ -26,10 +26,10 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 basicFragment.setMunicipalityData(municipalityData);
                 return basicFragment;
             case 1:
-                Log.d(TAG, "createFragment: Creating VehicleFragment");
-                VehicleFragment vehicleFragment = new VehicleFragment();
-                vehicleFragment.setMunicipalityData(municipalityData);
-                return vehicleFragment;
+                Log.d(TAG, "createFragment: Creating PropertytaxFragment");
+                PropertytaxFragment propertytaxFragment = new PropertytaxFragment();
+                propertytaxFragment.setMunicipalityData(municipalityData);
+                return propertytaxFragment;
             case 2:
                 Log.d(TAG, "createFragment: Creating EconomicFragment");
                 EconomicFragment economicFragment = new EconomicFragment(municipalityData);
@@ -50,7 +50,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return "Population";
             case 1:
-                return "Vehicles";
+                return "Propertytax";
             case 2:
                 return "Economy";
             default:

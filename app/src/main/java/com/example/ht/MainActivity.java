@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             String searchText = params[0];
             PopulationData populationData = null;
             WeatherData weatherData = null;
-            List<VehicleData> vehicleDataList = null;
+            List<PropertytaxData> propertytaxDataList = null;
             EconomicData economicData = null;
             Log.d(TAG, "doInBackground: Fetching data for " + searchText);
             try {
@@ -66,16 +66,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "PopulationData Retrieved: " + populationData);
                 weatherData = dataRetriever.getWeatherData(searchText);
                 Log.d(TAG, "WeatherData Retrieved: " + weatherData);
-                vehicleDataList = dataRetriever.getVehicleData(searchText);
-                for (VehicleData vehicleData : vehicleDataList) {
-                    Log.d(TAG, "VehicleData Retrieved: " + vehicleData);
+                propertytaxDataList = dataRetriever.getPropertytaxData(searchText);
+                for (PropertytaxData propertytaxData : propertytaxDataList) {
+                    Log.d(TAG, "PropertytaxData Retrieved: " + propertytaxData);
                 }
                 economicData = dataRetriever.getEconomicData(searchText);
                 Log.d(TAG, "EconomicData Retrieved: " + economicData);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return new MunicipalityData(populationData, weatherData, vehicleDataList, economicData);
+            return new MunicipalityData(populationData, weatherData, propertytaxDataList, economicData);
         }
 
         @Override
@@ -120,10 +120,10 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "BasicFragment updated with MunicipalityData: " + municipalityData);
         }
 
-        VehicleFragment vehicleFragment = (VehicleFragment) getSupportFragmentManager().findFragmentByTag("f" + 1);
-        if (vehicleFragment != null) {
-            vehicleFragment.setMunicipalityData(municipalityData);
-            Log.d(TAG, "VehicleFragment updated with MunicipalityData: " + municipalityData);
+        PropertytaxFragment propertytaxFragment = (PropertytaxFragment) getSupportFragmentManager().findFragmentByTag("f" + 1);
+        if (propertytaxFragment != null) {
+            propertytaxFragment.setMunicipalityData(municipalityData);
+            Log.d(TAG, "PropertytaxFragment updated with MunicipalityData: " + municipalityData);
         }
 
         EconomicFragment economicFragment = (EconomicFragment) getSupportFragmentManager().findFragmentByTag("f" + 2);
