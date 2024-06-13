@@ -17,8 +17,8 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
     private static final String API_KEY = "7d0c5fe9d064e6866204e39457bf9efe";
     private static final String CLASSIFICATION_ITEMS_API_URL = "https://data.stat.fi/api/classifications/v2/classifications/kunta_1_20240101/classificationItems?content=data&meta=max&lang=fi";
 
-    private static final String PROPERTYTAX_API_URL = "https://vero2.stat.fi:443/PXWeb/api/v1/fi/Vero/Kiinteistoverot/kive_101.px";
-    private static final String POPULATION_API_URL = "https://pxdata.stat.fi/PxWeb/api/v1/fi/Kuntien_avainluvut/2023/kuntien_avainluvut_2023_aikasarja.px";
+    private static final String PROPERTYTAX_API_URL = "https://vero2.stat.fi:443/PXWeb/api/v1/en/Vero/Kiinteistoverot/kive_101.px";
+    private static final String POPULATION_API_URL = "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/Kuntien_avainluvut/2023/kuntien_avainluvut_2023_aikasarja.px";
     private static final String ECONOMIC_API_URL = "https://sotkanet.fi/rest/1.1/json?indicator=3856&years=2021&years=2020&genders=total";
 
     private static final int MAX_RETRIES = 10; // Maksimimäärä uudelleenyrityksiä

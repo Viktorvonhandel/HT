@@ -59,16 +59,16 @@ public class BasicFragment extends Fragment {
 
             if (populationData != null) {
                 String populationText = "Population: " + populationData.getPopulation() +
-                        "\nPopulation Change: " + populationData.getPopulationChange() +
-                        "\nJob Self Sufficiency: " + populationData.getJobSelfSufficiency() +
-                        "\nEmployment Rate: " + populationData.getEmploymentRate();
+                        "\nPopulation Change: " + populationData.getPopulationChange() + "%" +
+                        "\nJob Self Sufficiency: " + populationData.getJobSelfSufficiency() + "%" +
+                        "\nEmployment Rate: " + populationData.getEmploymentRate() +"%";
                 populationTextView.setText(populationText);
             }
 //NIINKÖ
             if (weatherData != null) {
                 String weatherText = "City: " + weatherData.getCityName() +
                         "\nTemperature: " + weatherData.getTemperature() +
-                        "\nIcon Code: " + weatherData.getIconCode();
+                        "\nIcon Code: " + weatherData.getIconCode() +"°C";
                 weatherTextView.setText(weatherText);
             }
         }

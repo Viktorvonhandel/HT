@@ -48,10 +48,10 @@ public class PopulationData {
     @Override
     public String toString() {
         return "PopulationData{" +
-                "population=" + population +
-                ", populationChange=" + populationChange +
-                ", jobSelfSufficiency=" + jobSelfSufficiency +
-                ", employmentRate=" + employmentRate +
+                population +
+                populationChange +
+                jobSelfSufficiency +
+                employmentRate +
                 '}';
     }
 

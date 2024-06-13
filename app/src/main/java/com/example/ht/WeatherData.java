@@ -49,9 +49,9 @@ public class WeatherData {
     @Override
     public String toString() {
         return "WeatherData{" +
-                "cityName='" + cityName + '\'' +
-                ", temperature=" + temperature +
-                ", iconCode='" + iconCode + '\'' +
+                cityName + '\'' +
+                 temperature +
+                iconCode + '\'' +
                 '}';
     }
 }

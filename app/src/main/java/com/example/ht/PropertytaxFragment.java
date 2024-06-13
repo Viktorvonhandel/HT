@@ -1,4 +1,5 @@
 package com.example.ht;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import android.widget.TextView;
-
 
 public class PropertytaxFragment extends Fragment {
 
@@ -24,6 +24,8 @@ public class PropertytaxFragment extends Fragment {
         recyclerView = view.findViewById(R.id.propertytaxRecyclerView);
 
         adapter = new PropertytaxDataAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (municipalityData != null) {
             showPropertytaxData();
@@ -42,7 +44,6 @@ public class PropertytaxFragment extends Fragment {
     private void showPropertytaxData() {
         List<PropertytaxData> propertytaxDataList = municipalityData.getPropertytaxDataList();
         adapter.setPropertytaxDataList(propertytaxDataList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }
+

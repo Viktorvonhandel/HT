@@ -3,10 +3,8 @@ package com.example.ht;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class PropertytaxDataAdapter extends RecyclerView.Adapter<PropertytaxView
     @NonNull
     @Override
     public PropertytaxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_propertytax, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_propertytax, parent, false);
         return new PropertytaxViewHolder(view);
     }
 
