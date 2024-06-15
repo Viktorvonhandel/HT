@@ -67,8 +67,8 @@ public class BasicFragment extends Fragment {
 //NIINKÖ
             if (weatherData != null) {
                 String weatherText = "City: " + weatherData.getCityName() +
-                        "\nTemperature: " + weatherData.getTemperature() +
-                        "\nIcon Code: " + weatherData.getIconCode() +"°C";
+                        "\nTemperature: " + weatherData.getTemperature() +"°C"+
+                        "\nIcon Code: " + weatherData.getIconCode() ;
                 weatherTextView.setText(weatherText);
             }
         }

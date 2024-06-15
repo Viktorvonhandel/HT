@@ -41,8 +41,8 @@ public class WeatherData {
         return temperature;
     }
 
-    public double getIconCode() {
-        return temperature;
+    public String getIconCode() {
+        return iconCode;
     }
 
 
