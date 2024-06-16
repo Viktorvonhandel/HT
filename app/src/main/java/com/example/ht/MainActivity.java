@@ -1,23 +1,34 @@
 package com.example.ht;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private static final String PREFS_NAME = "RecentSearches";
+    private static final String RECENT_SEARCHES_KEY = "RecentSearchesKey";
     private MunicipalityData municipalityData;
     private ViewPager2 viewPager;
+    private ArrayAdapter<String> recentSearchesAdapter;
+    private List<String> recentSearchesList;
+    private EditText searchEditText;  // Declare searchEditText as a class variable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +36,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: Activity created");
 
-        EditText searchEditText = findViewById(R.id.searchEditText);
+        searchEditText = findViewById(R.id.searchEditText);  // Initialize searchEditText here
         Button searchButton = findViewById(R.id.searchButton);
+        ListView recentSearchesListView = findViewById(R.id.recentSearchesListView);
 
+        // Load recent searches from SharedPreferences
+        recentSearchesList = loadRecentSearches();
+
+        // Set up adapter and attach it to the ListView
+        recentSearchesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recentSearchesList);
+        recentSearchesListView.setAdapter(recentSearchesAdapter);
+
+        recentSearchesListView.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedSearch = recentSearchesList.get(position);
+            searchEditText.setText(selectedSearch);  // Set the selected search text in the searchEditText
+        });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,15 +59,54 @@ public class MainActivity extends AppCompatActivity {
                 if (searchText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Please enter region", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Add searchText to recent searches
+                    addSearchToRecent(searchText);
                     new FetchDataTask().execute(searchText);
                 }
             }
         });
 
         // Lisätään homeButtonin toiminnallisuus
-
     }
 
+    private void addSearchToRecent(String searchText) {
+        if (recentSearchesList.contains(searchText)) {
+            recentSearchesList.remove(searchText);
+        }
+        recentSearchesList.add(0, searchText);
+        if (recentSearchesList.size() > 5) {
+            recentSearchesList.remove(recentSearchesList.size() - 1);
+        }
+        recentSearchesAdapter.notifyDataSetChanged();
+        saveRecentSearches(recentSearchesList);
+    }
+
+    private List<String> loadRecentSearches() {
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String recentSearches = preferences.getString(RECENT_SEARCHES_KEY, "");
+        List<String> recentSearchesList = new ArrayList<>();
+        if (!recentSearches.isEmpty()) {
+            String[] searchesArray = recentSearches.split(",");
+            for (String search : searchesArray) {
+                recentSearchesList.add(search);
+            }
+        }
+        return recentSearchesList;
+    }
+
+    private void saveRecentSearches(List<String> recentSearchesList) {
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        StringBuilder sb = new StringBuilder();
+        for (String search : recentSearchesList) {
+            sb.append(search).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 1); // Remove trailing comma
+        }
+        editor.putString(RECENT_SEARCHES_KEY, sb.toString());
+        editor.apply();
+    }
 
     private class FetchDataTask extends AsyncTask<String, Void, MunicipalityData> {
         @Override
@@ -88,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                 ImageButton homeButton = findViewById(R.id.homeButton); // Lisätty homeButton
                 viewPager = findViewById(R.id.viewPager);
                 ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), municipalityData);
-//NÖH
                 viewPager.setAdapter(adapter);
 
                 TabLayout tabLayout = findViewById(R.id.tablayout);
@@ -133,4 +194,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
 

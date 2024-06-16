@@ -17,7 +17,14 @@ import com.squareup.picasso.Picasso;
 public class BasicFragment extends Fragment {
     private static final String TAG = "BasicFragment";
 
-    private TextView populationTextView;
+    private TextView populationTitleTextView;
+    private TextView populationValueTextView;
+    private TextView populationChangeTitleTextView;
+    private TextView populationChangeValueTextView;
+    private TextView jobSelfSufficiencyTitleTextView;
+    private TextView jobSelfSufficiencyValueTextView;
+    private TextView employmentRateTitleTextView;
+    private TextView employmentRateValueTextView;
     private TextView weatherTextView;
     private TextView temperatureTextView;
     private ImageView weatherIconImageView;
@@ -37,7 +44,14 @@ public class BasicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_basic, container, false);
-        populationTextView = view.findViewById(R.id.populationTextView);
+        populationTitleTextView = view.findViewById(R.id.populationTitleTextView);
+        populationValueTextView = view.findViewById(R.id.populationValueTextView);
+        populationChangeTitleTextView = view.findViewById(R.id.populationChangeTitleTextView);
+        populationChangeValueTextView = view.findViewById(R.id.populationChangeValueTextView);
+        jobSelfSufficiencyTitleTextView = view.findViewById(R.id.jobSelfSufficiencyTitleTextView);
+        jobSelfSufficiencyValueTextView = view.findViewById(R.id.jobSelfSufficiencyValueTextView);
+        employmentRateTitleTextView = view.findViewById(R.id.employmentRateTitleTextView);
+        employmentRateValueTextView = view.findViewById(R.id.employmentRateValueTextView);
         weatherTextView = view.findViewById(R.id.weatherTextView);
         temperatureTextView = view.findViewById(R.id.temperatureTextView);
         weatherIconImageView = view.findViewById(R.id.weatherIconImageView);
@@ -61,16 +75,15 @@ public class BasicFragment extends Fragment {
         this.municipalityData = municipalityData;
         Log.d(TAG, "setMunicipalityData");
 
-        if (municipalityData != null && populationTextView != null && weatherTextView != null && temperatureTextView != null && weatherIconImageView != null) {
+        if (municipalityData != null && weatherTextView != null && temperatureTextView != null && weatherIconImageView != null) {
             PopulationData populationData = municipalityData.getPopulationData();
             WeatherData weatherData = municipalityData.getWeatherData();
 
             if (populationData != null) {
-                String populationText = "Population: " + populationData.getPopulation() +
-                        "\nPopulation Change: " + populationData.getPopulationChange() + "%" +
-                        "\nJob Self Sufficiency: " + populationData.getJobSelfSufficiency() + "%" +
-                        "\nEmployment Rate: " + populationData.getEmploymentRate() + "%";
-                populationTextView.setText(populationText);
+                populationValueTextView.setText(String.valueOf(populationData.getPopulation()));
+                populationChangeValueTextView.setText(populationData.getPopulationChange() + "%");
+                jobSelfSufficiencyValueTextView.setText(populationData.getJobSelfSufficiency() + "%");
+                employmentRateValueTextView.setText(populationData.getEmploymentRate() + "%");
             }
 
             if (weatherData != null) {
@@ -86,6 +99,7 @@ public class BasicFragment extends Fragment {
         }
     }
 }
+
 
 
 

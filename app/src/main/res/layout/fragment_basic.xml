@@ -19,12 +19,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
         android:contentDescription="Weather Data"
         android:text="Weather Data"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/weatherIconImageView"
+        app:layout_constraintEnd_toStartOf="@+id/weatherIconImageView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +32,7 @@
         android:id="@+id/temperatureTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="Temperature"
         android:text="Temperature: 0°C"
         android:textSize="18sp"
@@ -41,20 +40,102 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.802"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/weatherTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/weatherIconImageView" />
 
     <TextView
-        android:id="@+id/populationTextView"
+        android:id="@+id/populationTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:contentDescription="Population Data"
-        android:text="Population Data"
+        android:layout_marginTop="44dp"
+        android:contentDescription="Population Title"
+        android:text="Population:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/temperatureTextView" />
+
+    <TextView
+        android:id="@+id/populationValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="44dp"
+        android:contentDescription="Population Value"
+        android:text="0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/populationTitleTextView"
+        app:layout_constraintTop_toBottomOf="@id/temperatureTextView" />
+
+    <TextView
+        android:id="@+id/populationChangeTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Population Change Title"
+        android:text="Population Change:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/populationTitleTextView" />
+
+    <TextView
+        android:id="@+id/populationChangeValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Population Change Value"
+        android:text="0%"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/populationChangeTitleTextView"
+        app:layout_constraintTop_toBottomOf="@id/populationValueTextView" />
+
+    <TextView
+        android:id="@+id/jobSelfSufficiencyTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Job Self Sufficiency Title"
+        android:text="Job Self Sufficiency:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/populationChangeTitleTextView" />
+
+    <TextView
+        android:id="@+id/jobSelfSufficiencyValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Job Self Sufficiency Value"
+        android:text="0%"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/jobSelfSufficiencyTitleTextView"
+        app:layout_constraintTop_toBottomOf="@id/populationChangeValueTextView" />
+
+    <TextView
+        android:id="@+id/employmentRateTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Employment Rate Title"
+        android:text="Employment Rate:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jobSelfSufficiencyTitleTextView" />
+
+    <TextView
+        android:id="@+id/employmentRateValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Employment Rate Value"
+        android:text="0%"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/employmentRateTitleTextView"
+        app:layout_constraintTop_toBottomOf="@id/jobSelfSufficiencyValueTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
