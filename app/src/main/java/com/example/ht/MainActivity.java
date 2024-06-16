@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String searchText = searchEditText.getText().toString();
                 if (searchText.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Syötä kunta ennen hakua", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please enter region", Toast.LENGTH_SHORT).show();
                 } else {
                     new FetchDataTask().execute(searchText);
                 }

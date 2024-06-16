@@ -4,77 +4,79 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class EconomicData {
-    private double debtRatio1;
-    private double debtRatio2;
-    private double debtRatio3;
-    private double debtRatio4;
-    private double debtRatio5;
+    private List<DataPoint> dataPoints;
 
-    public EconomicData(double debtRatio1, double debtRatio2, double debtRatio3, double debtRatio4, double debtRatio5) {
-        this.debtRatio1 = debtRatio1;
-        this.debtRatio2 = debtRatio2;
-        this.debtRatio3 = debtRatio3;
-        this.debtRatio4 = debtRatio4;
-        this.debtRatio5 = debtRatio5;
+    public EconomicData() {
+        this.dataPoints = new ArrayList<>();
     }
 
-    public double getDebtRatio1() {
-        return debtRatio1;
+    public void addDataPoint(int year, double value) {
+        dataPoints.add(new DataPoint(year, value));
     }
 
-    public double getDebtRatio2() {
-        return debtRatio2;
-    }
-
-    public double getDebtRatio3() {
-        return debtRatio3;
-    }
-
-    public double getDebtRatio4() {
-        return debtRatio4;
-    }
-
-    public double getDebtRatio5() {
-        return debtRatio5;
+    public List<DataPoint> getDataPoints() {
+        // Lajitellaan datapisteet vuosien mukaan ennen palauttamista
+        Collections.sort(dataPoints, new Comparator<DataPoint>() {
+            @Override
+            public int compare(DataPoint o1, DataPoint o2) {
+                return Integer.compare(o1.getYear(), o2.getYear());
+            }
+        });
+        return dataPoints;
     }
 
     public static EconomicData parseData(String jsonData, String municipalityCode) throws JSONException {
+        EconomicData economicData = new EconomicData();
         JSONArray jsonArray = new JSONArray(jsonData);
-        double[] debtRatios = new double[5];
-        int count = 0;
-
-
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            if (count >= 5) {
-                break;
-            }
-
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             if (jsonObject.getInt("region") == Integer.parseInt(municipalityCode)) {
-                debtRatios[count] = jsonObject.getDouble("value");
-                count++;
+                int year = jsonObject.getInt("year");
+                double value = jsonObject.getDouble("value");
+                economicData.addDataPoint(year, value);
             }
         }
-
-        // Täytetään puuttuvat arvot nollilla, jos vähemmän kuin 5 arvoa löytyy
-        for (int i = count; i < 5; i++) {
-            debtRatios[i] = 0;
-        }
-
-        return new EconomicData(debtRatios[0], debtRatios[1], debtRatios[2], debtRatios[3], debtRatios[4]);
+        return economicData;
     }
 
-    @Override
     public String toString() {
         return "EconomicData{" +
-                "debtRatio1=" + debtRatio1 +
-                ", debtRatio2=" + debtRatio2 +
-                ", debtRatio3=" + debtRatio3 +
-                ", debtRatio4=" + debtRatio4 +
-                ", debtRatio5=" + debtRatio5 +
+                "dataPoints=" + dataPoints +
                 '}';
     }
+
+    public static class DataPoint {
+        private int year;
+        private double value;
+
+        public DataPoint(int year, double value) {
+            this.year = year;
+            this.value = value;
+        }
+
+        public int getYear() {
+            return year;
+        }
+
+        public double getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return "{" +
+                    "year=" + year +
+                    ", value=" + value +
+                    '}';
+        }
+    }
 }
+
 

@@ -9,14 +9,14 @@
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Hae kunta nimellä"
+        android:hint="Search by region nam"
         android:layout_marginTop="16dp"/>
 
     <Button
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hae"
+        android:text="Search"
         android:textColor="?attr/colorSecondary"
         android:layout_below="@id/searchEditText"/>
 
@@ -25,7 +25,7 @@
         android:id="@+id/recentSearchesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Viimeaikaiset haut"
+        android:text="Recent searches"
         android:layout_below="@id/searchButton"
         android:layout_marginTop="16dp"/>
 

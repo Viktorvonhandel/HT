@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,13 +19,12 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class EconomicFragment extends Fragment {
 
@@ -62,42 +60,34 @@ public class EconomicFragment extends Fragment {
     private void updateUI() {
         EconomicData economicData = municipalityData.getEconomicData();
         if (economicData != null) {
-            // Update TextViews with debt ratios
-            updateDebtRatioTextViews(economicData);
-
             // Update LineChart with debt ratio data
             updateLineChart(economicData);
         }
-    }
-
-    private void updateDebtRatioTextViews(EconomicData economicData) {
-        TextView debtRatio1TextView = binding.debtRatio1TextView;
-        TextView debtRatio2TextView = binding.debtRatio2TextView;
-        TextView debtRatio3TextView = binding.debtRatio3TextView;
-        TextView debtRatio4TextView = binding.debtRatio4TextView;
-        TextView debtRatio5TextView = binding.debtRatio5TextView;
-
-        debtRatio1TextView.setText("Debt Ratio 1: " + economicData.getDebtRatio1());
-        debtRatio2TextView.setText("Debt Ratio 2: " + economicData.getDebtRatio2());
-        debtRatio3TextView.setText("Debt Ratio 3: " + economicData.getDebtRatio3());
-        debtRatio4TextView.setText("Debt Ratio 4: " + economicData.getDebtRatio4());
-        debtRatio5TextView.setText("Debt Ratio 5: " + economicData.getDebtRatio5());
     }
 
     private void updateLineChart(EconomicData economicData) {
         LineChart lineChart = binding.lineChart;
 
         List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(1, (float) economicData.getDebtRatio1()));
-        entries.add(new Entry(2, (float) economicData.getDebtRatio2()));
-        entries.add(new Entry(3, (float) economicData.getDebtRatio3()));
-        entries.add(new Entry(4, (float) economicData.getDebtRatio4()));
-        entries.add(new Entry(5, (float) economicData.getDebtRatio5()));
+        List<EconomicData.DataPoint> dataPoints = economicData.getDataPoints();
 
-        LineDataSet dataSet = new LineDataSet(entries, "Debt Ratios over Years");
-        dataSet.setColor(0xFFC6FF00);
+        // Use a TreeMap to maintain order and uniqueness of years
+        Map<Integer, Float> uniqueYearsMap = new TreeMap<>();
+
+        for (int i = 0; i < dataPoints.size(); i++) {
+            EconomicData.DataPoint dataPoint = dataPoints.get(i);
+            uniqueYearsMap.put(dataPoint.getYear(), (float) dataPoint.getValue());
+        }
+
+        int index = 0;
+        for (Map.Entry<Integer, Float> entry : uniqueYearsMap.entrySet()) {
+            entries.add(new Entry(index++, entry.getValue()));
+        }
+
+        LineDataSet dataSet = new LineDataSet(entries, "The development of relative indebtedness over a 5-year period");
+        dataSet.setColor(Color.BLUE);
         dataSet.setValueTextColor(Color.RED);
-        dataSet.setCircleColor(Color.BLUE);
+        dataSet.setCircleColor(Color.GREEN);
         dataSet.setCircleRadius(5f);
         dataSet.setLineWidth(2f);
         dataSet.setValueTextSize(10f);
@@ -106,6 +96,26 @@ public class EconomicFragment extends Fragment {
         lineChart.setData(lineData);
 
 
+
+        Legend legend = lineChart.getLegend();
+        legend.setTextColor(Color.BLACK);
+
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setTextColor(Color.BLACK);
+
+        // Convert unique years to an array of strings for the x-axis labels
+        final String[] xLabels = uniqueYearsMap.keySet().stream().map(String::valueOf).toArray(String[]::new);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabels));
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setLabelCount(xLabels.length);
+
+        YAxis yAxisLeft = lineChart.getAxisLeft();
+        yAxisLeft.setEnabled(false); // Disable the left y-axis
+
+        YAxis yAxisRight = lineChart.getAxisRight();
+        yAxisRight.setTextColor(Color.BLACK);
+        yAxisRight.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART); // Place y-axis labels outside the chart
 
         lineChart.animateY(1000);
         lineChart.invalidate(); // refresh chart
@@ -117,4 +127,5 @@ public class EconomicFragment extends Fragment {
         binding = null;
     }
 }
+
 

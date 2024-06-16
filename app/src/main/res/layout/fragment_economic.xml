@@ -5,60 +5,20 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/debtRatio1TextView"
+        android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Debt Ratio 1:"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <TextView
-        android:id="@+id/debtRatio2TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Debt Ratio 2:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <TextView
-        android:id="@+id/debtRatio3TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Debt Ratio 3:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <TextView
-        android:id="@+id/debtRatio4TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Debt Ratio 4:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <TextView
-        android:id="@+id/debtRatio5TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Debt Ratio 5:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:text="Relative indebtedness, %"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp" />
 
 </LinearLayout>
