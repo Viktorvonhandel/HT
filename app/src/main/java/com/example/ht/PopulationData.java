@@ -45,14 +45,6 @@ public class PopulationData {
         double employmentRate = values.getDouble(3);
         return new PopulationData(population, populationChange, jobSelfSufficiency, employmentRate);
     }
-    @Override
-    public String toString() {
-        return "PopulationData{" +
-                population +
-                populationChange +
-                jobSelfSufficiency +
-                employmentRate +
-                '}';
-    }
+
 
 }

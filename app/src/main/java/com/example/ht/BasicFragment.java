@@ -57,7 +57,7 @@ public class BasicFragment extends Fragment {
         weatherIconImageView = view.findViewById(R.id.weatherIconImageView);
         Log.d(TAG, "onCreateView");
 
-        // Tarkistetaan, onko datan asettamista varten
+
         if (municipalityData != null) {
             setMunicipalityData(municipalityData);
         }

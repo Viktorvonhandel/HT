@@ -24,7 +24,7 @@ public class UI {
 
     public void setupTabLayout(MunicipalityData municipalityData) {
         Log.d(TAG, "setupTabLayout: Setting up tab layout");
-        Log.d(TAG, "PERKELE NO TÄSSÄ : " + municipalityData);
+
 
         if (viewPager != null && context instanceof AppCompatActivity) {
             AppCompatActivity activity = (AppCompatActivity) context;
@@ -43,7 +43,6 @@ public class UI {
                     tab.setText(adapter.getPageTitle(position));
                 }).attach();
 
-                // Lisää homeButtonin toiminnallisuus
                 setupHomeButton(activity);
             } else {
                 Log.e(TAG, "ViewPager or FragmentManager is null");
@@ -52,7 +51,7 @@ public class UI {
             Log.e(TAG, "Context is not an instance of AppCompatActivity or ViewPager is null");
         }
     }
-//NIH
+
     private void setupHomeButton(AppCompatActivity activity) {
         ImageView homeButton = activity.findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new OnClickListener() {

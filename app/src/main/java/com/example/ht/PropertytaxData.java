@@ -57,7 +57,6 @@ public class PropertytaxData {
             if (valueObject instanceof Double) {
                 value = (Double) valueObject;
             } else {
-                // Aseta null-arvo nollaksi
                 value = 0;
             }
             propertytaxDataList.add(new PropertytaxData(label, value));
@@ -65,10 +64,5 @@ public class PropertytaxData {
 
         return propertytaxDataList;
     }
-    public String toString() {
-        return "PropertytaxData{" +
-                "group='" + group + '\'' +
-                ", value=" + value +
-                '}';
-    }
+
 }

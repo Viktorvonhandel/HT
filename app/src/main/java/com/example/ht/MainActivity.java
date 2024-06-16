@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private ArrayAdapter<String> recentSearchesAdapter;
     private List<String> recentSearchesList;
-    private EditText searchEditText;  // Declare searchEditText as a class variable
+    private EditText searchEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: Activity created");
 
-        searchEditText = findViewById(R.id.searchEditText);  // Initialize searchEditText here
+        searchEditText = findViewById(R.id.searchEditText);
         Button searchButton = findViewById(R.id.searchButton);
         ListView recentSearchesListView = findViewById(R.id.recentSearchesListView);
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Lisätään homeButtonin toiminnallisuus
+        // Homebutton funktio added
     }
 
     private void addSearchToRecent(String searchText) {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 DataRetriever dataRetriever = new DataRetriever(new DataRetriever.DataRetrieverListener() {
                     @Override
                     public void onDataRetrieved(Object data) {
-                        // Not needed for now
+
                     }
                 });
                 populationData = dataRetriever.getPopulationData(searchText);
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "MunicipalityData Retrieved: " + municipalityData);
 
                 setContentView(R.layout.tab_layout);
-                ImageButton homeButton = findViewById(R.id.homeButton); // Lisätty homeButton
+                ImageButton homeButton = findViewById(R.id.homeButton);
                 viewPager = findViewById(R.id.viewPager);
                 ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), municipalityData);
                 viewPager.setAdapter(adapter);

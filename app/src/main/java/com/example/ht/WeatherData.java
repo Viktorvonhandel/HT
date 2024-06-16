@@ -28,7 +28,7 @@ public class WeatherData {
             return new WeatherData(cityName, temperature, iconCode);
         } catch (JSONException e) {
             e.printStackTrace();
-            return null; // Palautetaan null virhetilanteessa
+            return null;
         }
 
     }
@@ -46,12 +46,5 @@ public class WeatherData {
     }
 
 
-    @Override
-    public String toString() {
-        return "WeatherData{" +
-                cityName + '\'' +
-                 temperature +
-                iconCode + '\'' +
-                '}';
-    }
+
 }

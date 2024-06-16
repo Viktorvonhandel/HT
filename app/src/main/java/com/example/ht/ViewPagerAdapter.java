@@ -44,7 +44,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         return 3;
     }
 
-    // Method to get page titles
+
     public String getPageTitle(int position) {
         switch (position) {
             case 0:

@@ -111,14 +111,14 @@ public class EconomicFragment extends Fragment {
         xAxis.setLabelCount(xLabels.length);
 
         YAxis yAxisLeft = lineChart.getAxisLeft();
-        yAxisLeft.setEnabled(false); // Disable the left y-axis
+        yAxisLeft.setEnabled(false);
 
         YAxis yAxisRight = lineChart.getAxisRight();
         yAxisRight.setTextColor(Color.BLACK);
-        yAxisRight.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART); // Place y-axis labels outside the chart
+        yAxisRight.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
 
         lineChart.animateY(1000);
-        lineChart.invalidate(); // refresh chart
+        lineChart.invalidate(); // refresh the chart
     }
 
     @Override

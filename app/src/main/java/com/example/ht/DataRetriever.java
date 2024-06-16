@@ -21,8 +21,8 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
     private static final String POPULATION_API_URL = "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/Kuntien_avainluvut/2023/kuntien_avainluvut_2023_aikasarja.px";
     private static final String ECONOMIC_API_URL ="https://sotkanet.fi/rest/1.1/json?indicator=3181&years=2021&years=2020&years=2019&years=2018&years=2017&genders=total";
 
-    private static final int MAX_RETRIES = 10; // Maksimimäärä uudelleenyrityksiä
-    private static final long RETRY_INTERVAL_MS = TimeUnit.SECONDS.toMillis(1); // Uudelleenyritysten väli millisekunteina
+    private static final int MAX_RETRIES = 10; // Max of tempt trying
+    private static final long RETRY_INTERVAL_MS = TimeUnit.SECONDS.toMillis(1); // How often this is trying again
 
     private DataRetrieverListener mListener;
 
@@ -100,7 +100,7 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
 
                 int retries = 0;
                 while (retries < MAX_RETRIES) {
-                    String propertytaxRawData = fetchData(PROPERTYTAX_API_URL, requestData, true); // Käytetään POST-metodia PROPERTYTAX_API_URL:n ollessa käytössä
+                    String propertytaxRawData = fetchData(PROPERTYTAX_API_URL, requestData, true);
                     if (propertytaxRawData != null) {
                         JSONObject jsonObject = new JSONObject(propertytaxRawData);
                         propertytaxDataList = PropertytaxData.parseData(jsonObject);
@@ -133,7 +133,7 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
                 String requestData = "{\"query\":[{\"code\":\"Alue\",\"selection\":{\"filter\":\"agg:_- Kunnat aakkosjärjestyksessä 2023.agg\",\"values\":[\"" + modifiedCode + "\"]}},{\"code\":\"Tiedot\",\"selection\":{\"filter\":\"item\",\"values\":[\"M411\",\"M476\",\"M151\",\"M536\"]}},{\"code\":\"Vuosi\",\"selection\":{\"filter\":\"item\",\"values\":[\"2021\"]}}],\"response\":{\"format\":\"json-stat2\"}}";
                 int retries = 0;
                 while (retries < MAX_RETRIES) {
-                    String populationRawData = fetchData(POPULATION_API_URL, requestData, true); // Käytetään POST-metodia POPULATION_API_URL:n ollessa käytössä
+                    String populationRawData = fetchData(POPULATION_API_URL, requestData, true);
                     if (populationRawData != null) {
                         populationData = PopulationData.parseData(populationRawData);
                         Log.d("DataRetriever", "Population Data: " + populationData);

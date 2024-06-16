@@ -21,7 +21,7 @@ public class EconomicData {
     }
 
     public List<DataPoint> getDataPoints() {
-        // Lajitellaan datapisteet vuosien mukaan ennen palauttamista
+        // Sorting of dpoints happening here
         Collections.sort(dataPoints, new Comparator<DataPoint>() {
             @Override
             public int compare(DataPoint o1, DataPoint o2) {
@@ -69,13 +69,7 @@ public class EconomicData {
             return value;
         }
 
-        @Override
-        public String toString() {
-            return "{" +
-                    "year=" + year +
-                    ", value=" + value +
-                    '}';
-        }
+
     }
 }
 
