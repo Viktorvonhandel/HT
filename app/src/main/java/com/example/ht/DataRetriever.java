@@ -19,7 +19,7 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
 
     private static final String PROPERTYTAX_API_URL = "https://vero2.stat.fi:443/PXWeb/api/v1/en/Vero/Kiinteistoverot/kive_101.px";
     private static final String POPULATION_API_URL = "https://pxdata.stat.fi:443/PxWeb/api/v1/fi/Kuntien_avainluvut/2023/kuntien_avainluvut_2023_aikasarja.px";
-    private static final String ECONOMIC_API_URL = "https://sotkanet.fi/rest/1.1/json?indicator=3856&years=2021&years=2020&genders=total";
+    private static final String ECONOMIC_API_URL ="https://sotkanet.fi/rest/1.1/json?indicator=3181&years=2021&years=2020&years=2019&years=2018&years=2017&genders=total";
 
     private static final int MAX_RETRIES = 10; // Maksimimäärä uudelleenyrityksiä
     private static final long RETRY_INTERVAL_MS = TimeUnit.SECONDS.toMillis(1); // Uudelleenyritysten väli millisekunteina
@@ -160,7 +160,7 @@ public class DataRetriever extends AsyncTask<String, Void, Object> {
         if (municipalityCode != null) {
             int retries = 0;
             while (retries < MAX_RETRIES) {
-                String economicData = fetchData(ECONOMIC_API_URL,null, false);
+                String economicData = fetchData(ECONOMIC_API_URL, null, false);
                 if (economicData != null) {
                     EconomicData economicDataObject = EconomicData.parseData(economicData, municipalityCode);
                     Log.d("DataRetriever", "Economic Data: " + economicDataObject);

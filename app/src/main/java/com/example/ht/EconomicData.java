@@ -1,4 +1,5 @@
 package com.example.ht;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,25 +39,34 @@ public class EconomicData {
         return debtRatio5;
     }
 
-
     public static EconomicData parseData(String jsonData, String municipalityCode) throws JSONException {
         JSONArray jsonArray = new JSONArray(jsonData);
         double[] debtRatios = new double[5];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            if (jsonObject.getInt("region") == Integer.parseInt(municipalityCode)) {
+        int count = 0;
 
-                debtRatios[0] = jsonObject.getDouble("value");
-                debtRatios[1] = jsonObject.getDouble("value");
-                debtRatios[2] = jsonObject.getDouble("value");
-                debtRatios[3] = jsonObject.getDouble("value");
-                debtRatios[4] = jsonObject.getDouble("value");
+
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            if (count >= 5) {
                 break;
             }
+
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            if (jsonObject.getInt("region") == Integer.parseInt(municipalityCode)) {
+                debtRatios[count] = jsonObject.getDouble("value");
+                count++;
+            }
         }
+
+        // Täytetään puuttuvat arvot nollilla, jos vähemmän kuin 5 arvoa löytyy
+        for (int i = count; i < 5; i++) {
+            debtRatios[i] = 0;
+        }
+
         return new EconomicData(debtRatios[0], debtRatios[1], debtRatios[2], debtRatios[3], debtRatios[4]);
     }
 
+    @Override
     public String toString() {
         return "EconomicData{" +
                 "debtRatio1=" + debtRatio1 +
